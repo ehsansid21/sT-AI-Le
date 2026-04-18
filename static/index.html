@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Outfit Stylist</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI Outfit Stylist</h1>
+            <p>Your personal fashion advisor powered by Gemini.</p>
+            <nav class="nav-tabs">
+                <a href="index.html" class="active">Outfit Stylist</a>
+                <a href="shopping.html">Shopping Advice</a>
+            </nav>
+        </header>
+
+        <main>
+            <div class="card form-section">
+                <form id="outfit-form">
+                    <div class="form-group">
+                        <label for="gender">Gender / Style Preference</label>
+                        <select id="gender" name="gender" required>
+                            <option value="Menswear / Male">Menswear / Male</option>
+                            <option value="Womenswear / Female">Womenswear / Female</option>
+                            <option value="Unisex / Androgynous">Unisex / Androgynous</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="occasion">Occasion</label>
+                        <input type="text" id="occasion" name="occasion" placeholder="e.g., Casual Everyday, Date Night, Office Work" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="region">City / Region (Optional)</label>
+                        <input type="text" id="region" name="region" placeholder="e.g., Tokyo, Middle East, NYC (For local trends)">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="vibe">Vibe / Style</label>
+                        <select id="vibe" name="vibe" required>
+                            <option value="Minimalist">Minimalist</option>
+                            <option value="Streetwear">Streetwear</option>
+                            <option value="Edgy">Edgy / Grunge</option>
+                            <option value="Preppy">Preppy / Classic</option>
+                            <option value="Boho">Bohemian / Relaxed</option>
+                            <option value="Old Money">Old Money</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="venue">Venue Type</label>
+                        <input type="text" id="venue" name="venue" placeholder="e.g., Outdoor Cafe, Dive Bar, Corporate Office" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="budget">Budget Range</label>
+                        <select id="budget" name="budget">
+                            <option value="Moderate">Moderate / Affordable</option>
+                            <option value="Premium">Premium / Luxe</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="available-clothes">What clothes do you already have? (Optional)</label>
+                        <textarea id="available-clothes" name="available-clothes" placeholder="e.g., Black jeans, white t-shirt, denim jacket..." rows="3" style="width: 100%; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); background-color: rgba(255, 255, 255, 0.05); color: #e2e8f0; padding: 0.75rem; font-family: 'Outfit', sans-serif; resize: vertical;"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="image-upload">Upload a photo of an item (Optional)</label>
+                        <p class="help-text">Want advice on how to style a specific piece? Upload it here!</p>
+                        <input type="file" id="image-upload" name="image" accept="image/*">
+                        <div id="image-preview" class="hidden"></div>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="use-location" checked>
+                        <label for="use-location">Use my location for real-time weather</label>
+                    </div>
+
+                    <button type="submit" id="generate-btn">Suggest Outfit</button>
+                </form>
+            </div>
+
+            <div class="card result-section hidden" id="result-container">
+                <h2>Your Styling Advice</h2>
+                <div id="loading" class="hidden">
+                    <div class="spinner"></div>
+                    <p>Consulting the fashion oracle...</p>
+                </div>
+                <div id="result-content"></div>
+            </div>
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="app.js?v=6"></script>
+</body>
+</html>
