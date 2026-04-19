@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Outfit Stylist - Shopping</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AI Outfit Stylist</h1>
+            <p>Your personal fashion advisor powered by Gemini.</p>
+            <nav class="nav-tabs">
+                <a href="index.html">Outfit Stylist</a>
+                <a href="shopping.html" class="active">Shopping Advice</a>
+            </nav>
+        </header>
+
+        <main>
+            <div class="card form-section">
+                <form id="shopping-form">
+                    <div class="form-group">
+                        <label for="gender">Gender / Style Preference</label>
+                        <select id="gender" name="gender" required>
+                            <option value="Menswear / Male">Menswear / Male</option>
+                            <option value="Womenswear / Female">Womenswear / Female</option>
+                            <option value="Unisex / Androgynous">Unisex / Androgynous</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="budget">Budget Range</label>
+                        <select id="budget" name="budget">
+                            <option value="Moderate">Moderate / Affordable</option>
+                            <option value="Premium">Premium / Luxe</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="shopping-prompt">What are you looking for?</label>
+                        <textarea id="shopping-prompt" name="shopping-prompt" placeholder="e.g., I'm going to a summer wedding in Miami. I have a navy blazer. What color shirt and pants should I buy from Zara or H&M?" rows="4" style="width: 100%; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.1); background-color: rgba(255, 255, 255, 0.05); color: #e2e8f0; padding: 0.75rem; font-family: 'Outfit', sans-serif; resize: vertical;" required></textarea>
+                    </div>
+
+                    <hr style="border: none; border-top: 1px solid rgba(255, 255, 255, 0.1); margin: 2rem 0;">
+                    
+                    <h3>Personal Attributes (Optional)</h3>
+                    <p class="help-text" style="margin-bottom: 1rem;">Help the AI tailor its advice to your body type and skin tone.</p>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label for="height">Height</label>
+                            <input type="text" id="height" name="height" placeholder="e.g., 5'10&quot; or 178cm">
+                        </div>
+                        <div class="form-group">
+                            <label for="weight">Weight</label>
+                            <input type="text" id="weight" name="weight" placeholder="e.g., 160 lbs or 72kg">
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                        <div class="form-group">
+                            <label for="skin-tone">Skin Tone / Undertone</label>
+                            <input type="text" id="skin-tone" name="skin-tone" placeholder="e.g., Warm Olive, Fair Cool">
+                        </div>
+                        <div class="form-group">
+                            <label for="body-type">Body Type / Build</label>
+                            <input type="text" id="body-type" name="body-type" placeholder="e.g., Athletic, Slim, Curvy">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="image-upload">Upload a photo of an item (Optional)</label>
+                        <p class="help-text">Want advice on what to buy that goes with this specific piece? Upload it here!</p>
+                        <input type="file" id="image-upload" name="image" accept="image/*">
+                        <div id="image-preview" class="hidden"></div>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <input type="checkbox" id="use-location" checked>
+                        <label for="use-location">Use my location for real-time weather</label>
+                    </div>
+
+                    <button type="submit" id="generate-btn">Get Shopping Advice</button>
+                </form>
+            </div>
+
+            <div class="card result-section hidden" id="result-container">
+                <h2>Your Shopping Advice</h2>
+                <div id="loading" class="hidden">
+                    <div class="spinner"></div>
+                    <p>Consulting the fashion oracle...</p>
+                </div>
+                <div id="result-content"></div>
+            </div>
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="app.js?v=6"></script>
+</body>
+</html>
