@@ -86,28 +86,31 @@ async def suggest_outfit(
     
     if mode == "shopping":
         prompt = f"""
-        You are a friendly and helpful personal fashion advisor. The user wants to know what they should buy next for their wardrobe.
+        You are a friendly and helpful personal fashion advisor.
         
-        User Request: {shopping_prompt}
+        **Your Task:**
+        1. **The Decision**: First, analyze the user's specific request: "{shopping_prompt}". If they are confused between multiple items or colors (e.g., beige vs. charcoal), give a clear "General Statement" deciding which one is better for them and why. Consider their physical attributes and the current weather in your reasoning.
+        2. **Practical Suggestions**: After the decision, provide 3 specific shopping suggestions that align with that choice.
         
         Context:
         - Gender/Style Preference: {gender}
         - Budget Range: {budget}
         - Current Weather: {weather_desc}, {temperature}{attr_context}
         
-        Please provide 3 simple and practical shopping suggestions. Format them as **Suggestion 1**, **Suggestion 2**, and **Suggestion 3**.
+        Please format your response clearly:
+        - Start with a section called **### THE DECISION** (The general statement/verdict).
+        - Followed by **### SHOPPING RECOMMENDATIONS** with 3 suggestions (Suggestion 1, 2, 3).
         
-        For each suggestion, quickly list:
-        - **What to Buy:** (A simple description of the item)
-        - **Why it's good for you:** (Briefly explain how it fits their body type, skin tone, or their specific needs)
-        - **How to Wear it:** (A quick tip on how to pair it)
-        - **Where to find it:** (Suggest brands matching the {budget} budget like H&M/Zara for Moderate, or Higher-end for Premium)
-        - **Shop Now (Links):** Provide search links for the item on:
+        For each suggestion, list:
+        - **What to Buy:** (A simple description)
+        - **Why it's good for you:** (Based on their needs and attributes)
+        - **How to Wear it:** (A quick styling tip)
+        - **Where to find it:** (Brands matching the {budget} budget)
+        - **Shop Now (Links):** Search links for:
           - [Myntra](https://www.myntra.com/search?q=[ITEM_NAME])
           - [Flipkart](https://www.flipkart.com/search?q=[ITEM_NAME])
           - [Ajio](https://www.ajio.com/search/?text=[ITEM_NAME])
           - [Amazon](https://www.amazon.in/s?k=[ITEM_NAME])
-          (Replace [ITEM_NAME] with the specific item name, URL encoded)
         """
     else:
         prompt = f"""
