@@ -1,9 +1,8 @@
 document.addEventListener('DOMContentLoaded', () => {
     const outfitForm = document.getElementById('outfit-form');
     const shoppingForm = document.getElementById('shopping-form');
+    const wardrobeForm = document.getElementById('wardrobe-form');
     const form = outfitForm || shoppingForm;
-    
-    if (!form) return;
 
     const resultContainer = document.getElementById('result-container');
     const loading = document.getElementById('loading');
@@ -29,7 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    form.addEventListener('submit', async (e) => {
+    if (form) {
+        form.addEventListener('submit', async (e) => {
         e.preventDefault();
         
         // UI State
@@ -111,11 +111,83 @@ document.addEventListener('DOMContentLoaded', () => {
             resultContainer.scrollIntoView({ behavior: 'smooth' });
         }
     });
+    }
 
     // Helper for geolocation Promise
     function getPosition(options) {
         return new Promise((resolve, reject) => 
             navigator.geolocation.getCurrentPosition(resolve, reject, options)
         );
+    }
+    // --- Wardrobe Page Logic ---
+    if (wardrobeForm) {
+        const uploadStatus = document.getElementById('upload-status');
+        const addBtn = document.getElementById('add-btn');
+        const wardrobeGrid = document.getElementById('wardrobe-grid');
+        
+        async function loadWardrobeItems() {
+            try {
+                const res = await fetch('/api/wardrobe/items');
+                if (res.ok) {
+                    const items = await res.json();
+                    wardrobeGrid.innerHTML = '';
+                    items.forEach(item => {
+                        const div = document.createElement('div');
+                        div.className = 'wardrobe-item';
+                        
+                        // Extract filename from path
+                        const imgPath = item.image_path ? item.image_path.replace('static/', '') : 'placeholder.png';
+                        
+                        div.innerHTML = `
+                            <img src="${imgPath}" alt="${item.name}">
+                            <div class="wardrobe-item-info">
+                                <div class="wardrobe-item-name">${item.name}</div>
+                                <div class="wardrobe-item-meta">${item.color} | ${item.category}</div>
+                            </div>
+                        `;
+                        wardrobeGrid.appendChild(div);
+                    });
+                }
+            } catch (err) {
+                console.error("Failed to load wardrobe items", err);
+            }
+        }
+
+        wardrobeForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            addBtn.disabled = true;
+            addBtn.textContent = 'Uploading...';
+            uploadStatus.classList.add('hidden');
+            
+            const formData = new FormData(wardrobeForm);
+            
+            try {
+                const res = await fetch('/api/wardrobe/add', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (res.ok) {
+                    uploadStatus.textContent = 'Item successfully added to your wardrobe!';
+                    uploadStatus.classList.remove('hidden');
+                    wardrobeForm.reset();
+                    document.getElementById('image-preview').classList.add('hidden');
+                    loadWardrobeItems();
+                } else {
+                    uploadStatus.textContent = 'Failed to add item.';
+                    uploadStatus.style.color = '#ef4444';
+                    uploadStatus.classList.remove('hidden');
+                }
+            } catch (err) {
+                uploadStatus.textContent = 'Error: ' + err.message;
+                uploadStatus.style.color = '#ef4444';
+                uploadStatus.classList.remove('hidden');
+            } finally {
+                addBtn.disabled = false;
+                addBtn.textContent = 'Add to Wardrobe';
+            }
+        });
+        
+        loadWardrobeItems();
     }
 });

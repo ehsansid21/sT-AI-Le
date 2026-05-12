@@ -3,3 +3,6 @@ venv/
 __pycache__/
 *.pyc
 .DS_Store
+wardrobe.db
+chroma_db/
+static/uploads/

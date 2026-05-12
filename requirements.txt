@@ -5,3 +5,7 @@ httpx
 google-generativeai
 python-multipart
 Pillow
+sqlalchemy
+chromadb
+sentence-transformers
+pydantic-settings
