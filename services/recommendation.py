@@ -27,6 +27,7 @@ async def generate_outfit_suggestion(
     body_type: str = None,
     lat: float = None,
     lon: float = None,
+    styling_prompt: str = None,
     uploaded_image: Image.Image = None
 ):
     init_gemini()
@@ -90,12 +91,14 @@ async def generate_outfit_suggestion(
         
         Context:
         - Gender/Style Preference: {gender}
-        - Venue: {venue}
-        - Vibe: {vibe}
-        - Occasion: {occasion}
+        - Venue: {venue if venue else 'Not specified'}
+        - Vibe: {vibe if vibe else 'Any Style'}
+        - Occasion: {occasion if occasion else 'Not specified'}
         - Current Weather: {weather_desc}, {temperature}{attr_context}{wardrobe_context}{similar_items_context}
         
-        **CRITICAL**: You MUST build the outfit primarily using items from "**My Digital Wardrobe**" if available. 
+        **User's Specific Request:** "{styling_prompt if styling_prompt else 'None specified. Just give me 3 great outfits.'}"
+        
+        **CRITICAL**: You MUST build the outfit primarily using items from "**My Digital Wardrobe**" if available. Focus heavily on fulfilling the User's Specific Request.
         
         Provide 3 distinct outfit options.
         For each option:

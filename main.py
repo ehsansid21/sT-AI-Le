@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import RedirectResponse
 from dotenv import load_dotenv
 
 from core.database import engine, Base
@@ -23,7 +24,7 @@ app.include_router(feedback.router)
 
 @app.get("/")
 async def read_root():
-    return {"message": "Visit /static/index.html to see the frontend."}
+    return RedirectResponse(url="/static/index.html")
 
 if __name__ == "__main__":
     import uvicorn

@@ -25,6 +25,7 @@ async def suggest_outfit(
     body_type: Optional[str] = Form(None),
     lat: Optional[float] = Form(None),
     lon: Optional[float] = Form(None),
+    available_clothes: Optional[str] = Form(None),
     image: Optional[UploadFile] = File(None),
     db: Session = Depends(get_db)
 ):
@@ -53,6 +54,7 @@ async def suggest_outfit(
         body_type=body_type,
         lat=lat,
         lon=lon,
+        styling_prompt=available_clothes,
         uploaded_image=img_data
     )
     
